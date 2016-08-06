@@ -1,2 +1,2 @@
-ã“ã‚“ã«ã¡ã¯ã€SourceTree
+‚±‚ñ‚É‚¿‚Í SourceTree
 
