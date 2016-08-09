@@ -17,7 +17,7 @@
     var ninja = new Ninja(); 
     assert(typeof ninja.dance == "function", "ninja は Personを継承"); 
  </script>
-  こんにちは SourceTree
+  こんにちは SourceTree!!
  </body>
  </html>
 
