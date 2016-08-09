@@ -18,6 +18,7 @@
     assert(typeof ninja.dance == "function", "ninja は Personを継承"); 
  </script>
   こんにちは SourceTree!!
+  ブランチ topic/lino を作成しました
  </body>
  </html>
 
