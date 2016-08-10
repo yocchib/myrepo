@@ -17,6 +17,7 @@
     var ninja = new Ninja(); 
     assert(typeof ninja.dance == "function", "ninja は Personを継承"); 
  </script>
+  チェリーピックのための追加行
   master ブランチにて行追加 さらにりベースとスカッシュテストのため
   こんにちは SourceTree!!
   ブランチ Topic/Lino を作成しました (^_^) 
