@@ -19,7 +19,7 @@
  </script>
   master ブランチにて行追加
   こんにちは SourceTree!!
-  ブランチ topic/lino を作成しました
+  ブランチ Topic/Lino を作成しました (^_^) 
  </body>
  </html>
 
