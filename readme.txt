@@ -20,6 +20,7 @@
   master ブランチにて行追加 さらにりベースとスカッシュテストのため
   こんにちは SourceTree!!
   ブランチ Topic/Lino を作成しました (^_^) 
+  Linoブランチにて行追加
  </body>
  </html>
 
