@@ -17,6 +17,7 @@
     var ninja = new Ninja(); 
     assert(typeof ninja.dance == "function", "ninja は Personを継承"); 
  </script>
+  master ブランチにて行追加
   こんにちは SourceTree!!
   ブランチ topic/lino を作成しました
  </body>
