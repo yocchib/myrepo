@@ -14,7 +14,7 @@
 */
 
 // オブジェクトリテラル 頁180
-var calculator = {
+var obj = {
   operand1 : 1, 
   operand2 : 1, 
  
@@ -45,7 +45,7 @@ var o = {
 	}
   }
 };
-calculator.o = o;
+obj.o = o;
 
 /* 頁 184 : 可変長の引数リスト( arguments )
  */
@@ -67,8 +67,27 @@ var funcMax = function max ( /* 任意の引数 */ ) {
   return max ;
 }
 
-calculator.f   = func ;
-calculator.max = funcMax ;
+obj.f   = func ;
+obj.max = funcMax ;
 
-module.exports = calculator ;
+function square(x) { return x*x; }
+obj.s = square ;
+obj.s_ans = obj.s(4);
 
+/*  頁 191 : 自分専用の関数プロパティを定義
+ * 階乗を計算し、結果を関数自身のプロパティにキャッシュする
+ */
+function factorial(n) {
+  if ( isFinite(n) && n>0 && n==Math.round(n)) { // 有限な正の整数のみ
+	if (!(n in factorial))
+		factorial[n] = n * factorial(n-1);
+	else
+		factorial[n] ;
+
+  } else
+	return NaN ;
+}
+factorial[1] = 1;
+obj.fact = factorial ;
+
+module.exports = obj ;
