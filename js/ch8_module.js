@@ -78,14 +78,16 @@ obj.s_ans = obj.s(4);
  * 階乗を計算し、結果を関数自身のプロパティにキャッシュする
  */
 function factorial(n) {
-  if ( isFinite(n) && n>0 && n==Math.round(n)) { // 有限な正の整数のみ
-	if (!(n in factorial))
-		factorial[n] = n * factorial(n-1);
-	else
-		factorial[n] ;
 
-  } else
+  if ( isFinite(n) && n>0 && n==Math.round(n)) { // 有限な正の整数のみ
+	if (n in factorial)
+		factorial[n] ;
+	else
+		factorial[n] = n * factorial(n-1);
+
+  } else {
 	return NaN ;
+  }
 }
 factorial[1] = 1;
 obj.fact = factorial ;
