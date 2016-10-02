@@ -79,11 +79,13 @@ obj.s_ans = obj.s(4);
  */
 function factorial(n) {
 
-  if ( isFinite(n) && n>0 && n==Math.round(n)) { // 有限な正の整数のみ
-	if (n in factorial)
+  // if ( isFinite(n) && n>0 && n==Math.round(n) ) { // 有限な正の整数のみ
+  if ( n > 0 ) { // 有限な正の整数のみ
+	if (n in factorial) {
 		factorial[n] ;
-	else
+	} else {
 		factorial[n] = n * factorial(n-1);
+	}
 
   } else {
 	return NaN ;
@@ -91,5 +93,19 @@ function factorial(n) {
 }
 factorial[1] = 1;
 obj.fact = factorial ;
+
+/* 頁 193 : 名前空間としての関数
+ * ans = obj.extend( { a2: 3, b2:4 }, { a2: 3, b2: 4 } )  // ans = { a: 1, b: 2, a2: 3, b2: 4 }
+ */
+obj.extend = (function() {  // 関数定義式
+  return function extend(o) {
+	for(var i=1 ; i < arguments.length ; i++) {
+		var source =  arguments[i];
+		for( var prop in source ) o[prop] = source[prop];
+	}
+	return o ;
+  };
+
+}());
 
 module.exports = obj ;
