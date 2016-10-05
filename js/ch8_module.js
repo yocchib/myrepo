@@ -9,6 +9,7 @@
  *
  * obj.o.m();
  * obj.max(1,3,5,7,9,2,4,6);  // 9
+ * var i = obj.uniqInteger();
  *
  *=============================================================
 */
@@ -107,5 +108,60 @@ obj.extend = (function() {  // 関数定義式
   };
 
 }());
+
+
+/* 頁 195 : クロージャを使う例 その 1  */
+obj.uniqInteger = (function() {
+  var counter = 0;
+  return function() { return counter++; };
+}());
+
+/* 頁 196 : クロージャを使う例 その 2 
+ *   var c = counter(), d = counter();
+ *   c.count(); d.count()
+ */
+obj.counter = function () {
+  var n = 0;
+  return {
+     count: function() { return n++; },
+     reset: function() { n = 0 ; },
+  };
+}
+/* 頁 197 : クロージャとゲッターセッターメソッド
+ *  var c = obj.counterX(1000);
+ *  c.count ; c.count = 2000 ;
+ */
+obj.counterX = function(n) {
+  return {
+     get count() { return n++; },   // ゲッターメソッド
+     set count(m) {                 // セッターメソッド
+	if ( m >= n) n = m ;
+	else throw Error("count can only be set to a large value");
+     }
+  };
+}
+
+/* 頁 197 : 例 8-4 クロージャを使ったプライベートプロパティアクセサメソッド
+ *
+ * 利用例： getName() と setName()というプロパティアクセサメソッドを追加する
+ *          文字列以外は設定できないようにする
+ *  var o = {};
+ *  obj.addPrivateProperty(o, "Name", function(x) {return typeof x == "string"});
+ *  o.setName("Frank"); 
+ *  console.log(o.getName());
+ *  o.setName(2);  // エラー
+ */
+obj.addPrivateProperty = function (o, name, predicate) {
+  var  value ;  // この値がプロパティ値
+
+  o["get" + name] = function() { return value; };
+
+  o["set" + name] = function(v) {
+     if ( predicate && !predicate(v) )
+     	throw Error("set" + name + ": invalid value " + v);
+     else
+     	value = v ;
+  };
+}
 
 module.exports = obj ;
