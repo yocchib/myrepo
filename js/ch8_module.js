@@ -26,7 +26,7 @@ var obj = {
   set1: function(x) { this.operand1 = x; return this },  // メソッドチェーン利用例
   set2: function(y) { this.operand2 = y; return this }
 };
-var obj = {};
+// var obj = {};
 var n = 17;
 obj.bin = n.toString(2);
 
@@ -135,8 +135,8 @@ obj.counterX = function(n) {
   return {
      get count() { return n++; },   // ゲッターメソッド
      set count(m) {                 // セッターメソッド
-	if ( m >= n) n = m ;
-	else throw Error("count can only be set to a large value");
+		if ( m >= n) n = m ;
+		else throw Error("count can only be set to a large value");
      }
   };
 }
@@ -161,6 +161,37 @@ obj.addPrivateProperty = function (o, name, predicate) {
      	throw Error("set" + name + ": invalid value " + v);
      else
      	value = v ;
+  };
+}
+
+/* 頁 198 
+ * obj.funcs[5]()
+ */
+function constfunc(v) { return function() { return v; }; }
+var funcs = [];
+for(var i=0 ; i < 10;i++) { funcs[i] = constfunc(i) }
+obj.funcs = funcs ;
+
+/* 頁 201 : モンキーパッチ (既存のメソッドを動的に変更する)
+ */
+obj.trace = function trace(o, m) {
+  var original = o[m];
+
+  o[m] = function() {
+	console.log(new Date(), "Entering:", m);
+	var result = original.apply(this, arguments); // 元のメッセージを呼び出す
+	console.log(new Date(), "Exiting:", m);
+	return result ;
+  };
+}
+
+/* 頁 202 : bind() メソッド
+ * o のメソッドとして f を呼び出す関数を返す
+ */
+obj.b = function bind(f, o) {
+  if (f.bind) return f.bind(o);  // bindメソッドがあれば それを使う
+  else return function() {
+	return f.apply(o, arguments);
   };
 }
 
