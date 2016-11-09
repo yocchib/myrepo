@@ -1,3 +1,7 @@
+/*============================================
+   第３回：連想配列はオブジェクト
+   　　　　無名関数とクロージャも併せて学ぶ
+ *============================================*/
 var man = { name : "Yamada", age : 18, sex : 'Male', foo: "bar" }
 var keys = Object.keys(man)
 for (var i = 0; i < keys.length ; i++) {
@@ -63,3 +67,76 @@ for (var i=0; i < 3; i++)  {
 console.log( callNames[0]());
 console.log( callNames[1]());
 console.log( callNames[2]());
+
+/* 49頁 : ディスパッチの例
+ */
+// クロージャを使ったディスパッチ
+function createCounter() {
+  var count = 0;
+  var counter = function (message) {
+    if (message == "reset") {
+      return function() { count = 0;}
+    } else if (message == "increment") {
+      return function() { count += 1;}
+    } else if (message == "value") {
+      return function() { return count; }
+    }
+  }
+  return counter ;
+}
+
+var counter = createCounter();
+// counter("reset")(); // 内部で counter が 0になる
+counter("increment")(); // 
+counter("reset")(); // 内部で counter が 0になる
+counter("increment")(); // 
+console.log("count = " + counter("value")() ); // 
+
+/*===================================================
+ * 第４回：無名関数でコールバック関数を実現
+ *  　　　 関数は組み合わせて利用できる  （関数合成）
+ *===================================================*/
+var square = { width : 100, height : 50 };
+function areaCall(square, f) {
+  var area = square.width * square.height
+  f(area);
+}
+areaCall(square, function(area) {console.log("area=" + area)} );
+
+/* 52頁：非同期処理の例 */
+console.log("start\n");
+setTimeout( function() { console.log("OK"); }, 1000 );
+console.log("Here\n");
+
+/* 53頁：コールバック関数を使った汎用化  */
+(function() {
+  var arr = [1,5,4,7];
+  function _map (f, a) {
+    var r = [];
+    for(var i = 0 ; i < a.length ; i++) {
+      r[i] = f(a[i]);
+    }
+    return r;
+  }
+  var arr2 = _map( function(x) { return x*2; },  arr );
+  console.log( "arr2=" + arr2 );
+})();
+
+/* 53頁：カリー化した  */
+(function() {
+  var arr = [1,5,4,7];
+  function _map (f) {
+    return function(a) {
+      var r = [];
+      for(var i = 0 ; i < a.length ; i++) {
+        r[i] = f(a[i]);
+      }
+      return r;
+    }
+  }
+  function add(x) {
+    return function(y) { return x + y ; };
+  }
+  var arr3 = _map( add(3) );
+  console.log( "arr3=" + arr3 );
+})();
