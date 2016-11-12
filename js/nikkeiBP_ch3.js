@@ -1,3 +1,7 @@
+/*============================================
+   第３回：連想配列はオブジェクト
+   　　　　無名関数とクロージャも併せて学ぶ
+ *============================================*/
 var man = { name : "Yamada", age : 18, sex : 'Male', foo: "bar" }
 var keys = Object.keys(man)
 for (var i = 0; i < keys.length ; i++) {
@@ -63,3 +67,27 @@ for (var i=0; i < 3; i++)  {
 console.log( callNames[0]());
 console.log( callNames[1]());
 console.log( callNames[2]());
+
+/* 49頁 : ディスパッチの例
+ */
+// クロージャを使ったディスパッチ
+function createCounter() {
+  var count = 0;
+  var counter = function (message) {
+    if (message == "reset") {
+      return function() { count = 0;}
+    } else if (message == "increment") {
+      return function() { count += 1;}
+    } else if (message == "value") {
+      return function() { return count; }
+    }
+  }
+  return counter ;
+}
+
+var counter = createCounter();
+// counter("reset")(); // 内部で counter が 0になる
+counter("increment")(); // 
+counter("reset")(); // 内部で counter が 0になる
+counter("increment")(); // 
+console.log("count = " + counter("value")() ); // 
