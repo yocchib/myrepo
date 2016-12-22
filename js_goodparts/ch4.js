@@ -103,10 +103,29 @@
         console.log(e.name + ": " + e.message);
       }
   };
-
   try_it();
+})();
+
+// 4.7 : 変数型の拡張
+(function() {
+  // Functionプロトタイプにmethodを追加することで
+  // prototypeプロパティを直接指定せずにメソッドを追加できるため
+  // 可読性がよい
+  Function.prototype.method = function(name, func) {
+     this.prototype[name] = func;
+     return this;
+  };
+  // Math.ceil(数字)  数字を切り上げして整数にします
+  // Math.floor(数字)小数以下を切り捨てして整数にします
+  Number.method('integer', function(){
+    return Math[this < 0 ? 'ceil' : 'floor'](this);
+  });
+
+  console.log((-10/3));
+  console.log((-10/3).integer());
 
 })();
 
-//  (function() {})();
 //
+
+//  (function() {})();
