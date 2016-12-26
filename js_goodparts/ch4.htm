@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta http-equiv="content-language" content="ja">
+ <meta charset="UTF-8">
+ <title> </title>
+ <script type="text/javascript" src="/js/assert.js"></script>
+ <link href="/css/assert.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<script type="text/javascript">
+ var walk_to_DOM = function walk(node, func) {
+	func(node);
+	node = node.firstChild();
+	while(node) {
+		walk(node, func);
+		node.nextSibiling ;
+	}
+ };
+
+ var getElementsByAttribute = function (att, value) {
+	var results = [];
+
+	walk_to_DOM(document.body, function (node) {    
+	  var actial = node.nodeType === 1 && node.getAttribute(att);
+	  if ( typeof(actial) === 'string' && 
+           (actial === value || typeof value !== 'string') ) {
+		results.push(node);
+	  }
+	});
+	return results ;
+ };
+
+ var pool = getElementsByAttribute('a', "sample");
+
+</script>
+
+<a href="sample">sample</a>
+<a href="sample2">sample2</a>
+<img src="sss.jpg">jpg</a>
+
+</body>
+</html>
+ 

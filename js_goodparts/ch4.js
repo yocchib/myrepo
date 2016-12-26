@@ -132,6 +132,31 @@
 
 })();
 
-//
+// 4.8 : 再帰
+(function() {
+  // ハノイの塔
+  var hanoi = function(disc, src, aux, dst) {
+    if (disc > 0) {
+      hanoi(disc-1, src, dst, aux);
+      console.log('Move disc ' + disc + ' from '+ src + ' to ' + dst );
+      hanoi(disc-1, aux, src, dst);
+    }
+  };
+  hanoi(3, 'Src' , 'Aux', 'Dst');
 
-//  (function() {})();
+  // 末尾再帰を行う　階乗関数例 
+  // (javascript は現在末尾再帰最適化を提供していないためリターンスタックを使い切る可能性あり)
+  var factorial = function factorial(i, a) {
+    a = a || 1;
+    if ( i< 2) {
+      return a;
+    }
+    return factorial(i-1, a*i);
+  };
+
+  console.log("fact():" + factorial(4));
+
+})();
+
+// 4.X :
+// (function() { })();
