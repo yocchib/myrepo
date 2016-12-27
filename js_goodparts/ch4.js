@@ -153,8 +153,57 @@
     }
     return factorial(i-1, a*i);
   };
-
   console.log("fact():" + factorial(4));
+})();
+
+// 4.9 : スコープ
+// JavaScript は ブロックスコープを持たない
+// JavaScript は 関数スコープは持っている
+//
+// (function() { })();
+
+// 4.10 : クロージャ
+// ある関数内で別の関数が定義されている場合、
+// 内部の関数は外部の関数で定義された変数やパラメータにアクセスできる
+// (但し this, arguments を除く)
+(function() { 
+
+  // valueプロパティを外部から保護したい場合の 例
+  // オブジェクトリテラルを使って初期化する代わりに、
+  // オブジェクトリテラルを戻り値とする関数で初期化する
+  var myObject = (function() {
+    var value= 0;
+
+    return {
+      increment: function (inc) {
+          value += typeof inc === 'number'? inc : 1;
+      },
+      getValue: function () {
+        return value;
+      }
+    };
+  })();
+  myObject.increment('a');
+  myObject.increment(3);
+  console.log('クロージャテスト :' + myObject.getValue());
+
+
+  // quo関数はコンストラクタではない
+  var quo = function( status) {
+    return {
+      get_status : function() {
+        return status ;
+      },
+      set_status : function(str) {
+        status = str  ;
+      }
+    };
+
+  };
+  var myQuo = quo("original");
+  myQuo.set_status("change orig");
+  console.log(myQuo.get_status());
+
 
 })();
 

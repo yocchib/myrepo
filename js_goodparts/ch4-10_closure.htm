@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta http-equiv="content-language" content="ja">
+ <meta charset="UTF-8">
+ <title> </title>
+ <script type="text/javascript" src="/js/assert.js"></script>
+ <link href="/css/assert.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+ <script type="text/javascript">
+  assert(false, "テスト偽"); 
+  var fade = function (node) {
+	var level = 1;
+	var step = function() {
+		var hex = level.toString(16);
+		node.style.backgroundColor = '#FFFF' + hex + hex ;
+		if (level < 15) {
+			level += 1;
+			setTimeout(step, 300);
+		}
+
+	};
+	setTimeout(step, 300);
+  };
+
+  fade(document.body);
+
+</script>
+</body>
+</html>
+ 

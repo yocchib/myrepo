@@ -7,15 +7,17 @@
  <script type="text/javascript" src="/js/assert.js"></script>
  <link href="/css/assert.css" rel="stylesheet" type="text/css">
 </head>
-<body>
+<body text="blue" link="#FF0405" bgcolor="#FF8844">
 <script type="text/javascript">
  var walk_to_DOM = function walk(node, func) {
 	func(node);
-	node = node.firstChild();
+	node = node.firstChild ;
+
 	while(node) {
 		walk(node, func);
-		node.nextSibiling ;
+		node = node.nextSibling ;
 	}
+
  };
 
  var getElementsByAttribute = function (att, value) {
@@ -31,13 +33,11 @@
 	return results ;
  };
 
- var pool = getElementsByAttribute('a', "sample");
+ var pool = getElementsByAttribute('text', "blue");
 
 </script>
 
 <a href="sample">sample</a>
-<a href="sample2">sample2</a>
-<img src="sss.jpg">jpg</a>
 
 </body>
 </html>
