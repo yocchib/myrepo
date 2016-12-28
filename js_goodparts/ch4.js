@@ -204,8 +204,72 @@
   myQuo.set_status("change orig");
   console.log(myQuo.get_status());
 
+  // クロージャの間違った例
+  var add_the_handlers = function() {
+    var i;
+    for(i=0; i< nodes.length ; i+=1) {
+      nodes[i].onclick = function (e) {
+        alert(i);
+      }
+    }
+  };
+  // 上記を修正した例
+  var add_the_handlers = function() {
+    var helper = function (i) {
+      return function (e) {
+        alert(i);
+      };
+    };
+    var i;
+    for(i=0; i< nodes.length ; i+=1) {
+      nodes[i].onclick = helper(i);
+    }
+  };
 
 })();
+
+// 4.11 : コールバック
+// 不連続なイベント処理を非同期に処理する例
+// req = prepare_the_request();
+// send_request(req, function(res) { display(res) });
+
+// 4.12 : モジュール
+(function() {
+  var entity = {
+    quot: '"',
+    lt:   '<',
+    gt:   '>',
+  };
+  str = "sample&gt;strings";
+  var str2 = str.replace(/&([^&;]+);/g,
+  function(a, b) {
+    var r = entity[b];
+    return typeof r === 'string' ? r : a ;
+  } );
+  console.log("module :" + str2);
+
+})();
+
+String.method('deentityify', function() {
+  // リテラル entity を評価するのには。コストがかかるので
+  // クロージャの中に格納して、実体参照をするメソッドを追加する
+  var entity = {
+    quot: '"',
+    lt:   '<',
+    gt:   '>',
+  };
+
+  // 'deentityify' メソッド本体
+  return function() {
+    return this.replace(/&([^&;]+);/g,
+      function(a, b) {
+        var r = entity[b];
+        return typeof r === 'string' ? r : a ;
+      } );
+  };
+}());
+var ret = 'sample&gt;&quot;strings&quot;'.deentityify();
+console.log("module2 :" + ret);
 
 // 4.X :
 // (function() { })();
