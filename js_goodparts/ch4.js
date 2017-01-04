@@ -250,7 +250,8 @@
 
 })();
 
-String.method('deentityify', function() {
+// String.method('deentityify', function() {
+String.prototype.deentityify =  function() {
   // リテラル entity を評価するのには。コストがかかるので
   // クロージャの中に格納して、実体参照をするメソッドを追加する
   var entity = {
@@ -267,9 +268,41 @@ String.method('deentityify', function() {
         return typeof r === 'string' ? r : a ;
       } );
   };
-}());
+}();
+// }());
 var ret = 'sample&gt;&quot;strings&quot;'.deentityify();
-console.log("module2 :" + ret);
+console.log("MODULE2 :" + ret);
+
+// モジュールの一般的パターンは、
+// プライベート変数と関数を定義する関数を生成することである
+// (クロージャを通じてプライベートな変数や関数にアクセスできる権利を持った関数を戻り値として返す)
+
+// セキュアなブジェクトを作成する例 (連続した数を生成する)
+(function() { 
+  var serial_maker = function () {
+    var prefix = '';
+    var seq = 0;
+    return {
+        set_prefix: function(p){
+          prefix = String(p);
+        },
+        set_seq: function(s){
+          seq = s ;
+        },
+        gensym: function(s){
+          var result = prefix + seq ;
+          seq += 1;
+          return  result ;
+        },
+    };
+  };
+  var seqer = serial_maker();
+  seqer.set_prefix('Q');
+  seqer.set_seq(1000);
+  var unique = seqer.gensym();
+  console.log("serial_maker :" + unique);
+
+})();
 
 // 4.X :
 // (function() { })();
