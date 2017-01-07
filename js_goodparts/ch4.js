@@ -304,5 +304,70 @@ console.log("MODULE2 :" + ret);
 
 })();
 
+// 4.14 : カリー化
+(function() {
+
+   Function.method('curry', function() {
+     var slice = Array.prototype.slice ;
+     var args  = slice.apply(arguments);
+     var that  = this ;
+
+     return function() {
+       return that.apply(null, args.concat(slice.apply(arguments)));
+     };
+   });
+
+  var add = function(a,b) {
+      if (typeof a !== 'number' || typeof b !== 'number') {
+        throw {
+           name: 'TypeError',
+           message: 'add needs numbers'
+        };
+      }
+      return a + b ;
+  }
+  var add1 = add.curry(2);
+  console.log("カリー化例(add) :" + add1(7));
+
+  var sum = function(){
+    var i, sum = 0;
+    for(i = 0; i < arguments.length ; i++) {
+      sum += arguments[i];
+    }
+    return sum;
+  };
+  var sumsum = sum.curry(2,3,4);
+  console.log("カリー化例(sum) :" + sumsum(7,8));
+
+})();
+
+// 4.15 : メモ化
+//
+(function() {
+  var  memoizer = function(memo, fundamental) {
+    var shell = function(n) {
+      var result = memo[n];
+      if (typeof result !== 'number') {
+        result = fundamental(shell, n);
+        memo[n] = result ;
+      }
+      return result;
+    };
+    return shell ; 
+  };
+
+  var fibonacci = memoizer([0,1], function(shell, n) {
+    return shell(n-1) + shell(n-2);
+  });
+
+  var factorial = memoizer([1,1], function(shell, n) {
+    return n * shell(n-1);
+  });
+
+  console.log("memo(fibonacci) :" + fibonacci(6));
+  console.log("memo(factorial) :" + factorial(5));
+
+})();
+
 // 4.X :
 // (function() { })();
