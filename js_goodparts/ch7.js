@@ -31,10 +31,22 @@
   test('132.45E-67');
   test('132.45D-67');
 
+  // 7.2 正規表現の構築
+  // 正規表現リテラルで生成された RegExpオブジェクトは単一のインスタンスを共有する
+  function make_a_matcher() {
+      return /a/gi ;
+  }
+  var x = make_a_matcher();
+  var y = make_a_matcher();
+  x.lastIndex = 10;
+  console.log(x.lastIndex);  // 10 
+  console.log(y.lastIndex);  // 0    エッ 10 でなく 0 ! 単一インスタンスじゃないじゃん 
+
 // ### アスキー文字全てにマッチする
 // @reference [JavaScript The Good Parts (P)]
 var ascii = /[!-\/:-@\[-`{-~}]/g;
 console.log( ascii.exec('!@') );
+
 
 
 // ### 正規表現因子でのエスケープ文字
